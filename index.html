@@ -1,159 +1,155 @@
 <!DOCTYPE html>
-<!-- saved from url=(0019)http://gl.0507.org/ -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html lang="en">
+<head>
 	<meta charset="UTF-8">
-	<title>3D CG 照片</title>
-<style type="text/css">
-*{margin: 0;padding: 0;}
-li{list-style: none;}
-body{background: #000;}
-	
-	
-	#ul1{
-		
-		position: relative;
-		width:150px;
-		height: 200px;
-		margin: 200px auto 0;
-		transform-style:preserve-3d;
-	  
-	   transform:perspective(800px) rotateX(-10deg) rotateY(10deg);
-	
-	 
-	}
-	#ul1 li{
-		width: 100%;
-		height: 100%;
-		position: absolute;
-		left: 0px;
-		top:0px;
-		transition:all 1s 3s;
-	}
-	#ul1 li img{
-		 width: 100%;
-        height: 100%;
-        position: absolute;
-        left: 0px;
-        top:0;
-        border-radius: 4px;
-        box-shadow: 0 0 10px rgba(255,255,255,1);
-        -webkit-box-reflect: below 8px -webkit-linear-gradient(top,rgba(0,0,0,0),rgba(0,0,0,0.7));  /*CSS3.0 新属性，倒影*/
-        -moz-box-reflect: below 8px -moz-linear-gradient(top,rgba(0,0,0,0),rgba(0,0,0,0.7));
-	}
-</style> 
-<script type="text/javascript">
-
-/*rotateX/rotateY/rotateZ可以帮助理解三维坐标，则translateZ则可以帮你理解透视位置(translateZ的功能就是让元素在自己的眼前或近或远)*/
-
-	window.onload=function(){
-		var oUl=document.getElementById("ul1");
-		var aImg=document.getElementsByTagName("img");
-		var aLi=oUl.getElementsByTagName("li");
-        var deg=360/aLi.length;
-
-		for(var i=0;i<aLi.length;i++){
-			aLi[i].style.transition='all 0.5s '+((aLi.length-1-i)*0.2)+'s';					//每张图片缩放的时间
-
-			aLi[i].style.WebkitTransform='rotateY('+deg*i+'deg) translateZ(450px)';
-			aLi[i].style.MozTransform='rotateY('+deg*i+'deg) translateZ(450px)';
+	<title>大表姐</title>
+	<style>
+		*{margin: 0;padding: 0;}
+		html,body{height: 100%;}
+		body{
+			overflow: hidden;
+			display: flex;
+			background: #000;
+			perspective: 1000px;
+			transform-style: preserve-3d; 
 		}
-		
-		//禁止拖动照片
-       document.onselectstart=function(){
-     	    return false;
-     }   
-
-     for(var i=0;i<aImg.length;i++){
-   	      aImg[i].setAttribute("ondragstart", "return false")
-     }
-
-       var roY=0;
-       var roX=-10;
-       var xN=0;
-       var yN=0;
-       var timer=null;
-        document.onmousedown=function(ev){
-            var ev=ev||event;
-   
-            var disX_=ev.clientX;
-            
-            var disY_=ev.clientY;
-         
-
-        
-         document.onmousemove=function(ev){
-         	 var ev=ev||event;
-         	 var disX=ev.clientX;
-         	 var disY=ev.clientY;
-           
-             xN=disX-disX_;
-             yN=disY-disY_;
-             
-             roY+=xN*0.1;
-             roX-=yN*0.1;
-
-             oUl.style.WebkitTransform='perspective(800px) rotateX('+roX+'deg) rotateY('+roY+'deg)';
-             oUl.style.MozTransform='perspective(800px) rotateX('+roX+'deg) rotateY('+roY+'deg)';
-             
-
-             disX_=ev.clientX;
-             disY_=ev.clientY;
-         }
-   
-		//实现鼠标按着滑动后，松开鼠标，画面继续跟进 差值 进行滑动
-        document.onmouseup=function(){
-	             document.onmousemove=null;
-
-	             timer=setInterval(function(){
-                       xN=xN*0.99;
-                       yN=yN*0.99;
-                      if(Math.abs(xN)<=0.5 && Math.abs(yN)<=0.5){		//决定滑动的周期，如果乘以 1.0，则一直滑动下去不停止
-                      	clearInterval(timer);
-                      }
-                     roY+=xN*0.05;
-                     roX-=yN*0.05; 
-
-
-                     oUl.style.WebkitTransform='perspective(800px) rotateX('+roX+'deg) rotateY('+roY+'deg)';		//360 浏览器适用这个
-                     //oUl.style.MozTransform='perspective(800px) rotateX('+roX+'deg) rotateY('+roY+'deg)';
-	             },30)
-         }
-
-
-    }
-
-	//取消鼠标右键
-   document.oncontextmenu=function(){
-   	   return false
-   }
-
-  document.onkeydown=function(ev){
-  	var ev=ev||event;
-  
-  	if(ev.keyCode==123){
-  		return false
-  	}
-  }
-
-
-
-	}
-</script>	
+		#box{
+			position: relative;
+			display: flex;
+			width: 160px;
+			height: 240px;
+			margin: auto;
+			transform-style: preserve-3d; 
+			transform: rotateX(-10deg);
+		}
+		#box > div{
+			transform-style: preserve-3d; 
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			line-height: 200px;
+			font-size: 50px;
+			text-align: center;
+			box-shadow:0 0 10px #fff;
+			-webkit-box-reflect:below 10px -webkit-linear-gradient(top,rgba(0,0,0,0) 40%,rgba(0,0,0,.8) 100%);
+		}
+		/*  #box > div:nth-child(1){
+					background: skyblue;
+					transform: translate3d(0,0,300px) rotateY(45deg);
+				}
+				#box > div:nth-child(2){
+					background: pink;
+					transform: rotateY(0deg);
+				}
+				#box > div:nth-child(3){
+					background: purple;
+					transform: translate3d(0,0,300px) rotateY(-45deg);
+				} 
+		*/
+		#box p{
+			position: absolute;
+			left: 0;
+			top: 0;
+			bottom: 0;
+			right: 0;
+			margin: auto;
+			width: 1200px;
+			height: 1200px;
+			background: -webkit-radial-gradient(center center,600px 600px,rgba(50,50,50,1),rgba(0,0,0,0));
+			border-radius: 50%;
+			transform: rotateX(90deg) translate3d(-600px,0,-105px);
+		}
+	</style>
 </head>
 <body>
-	<ul id="ul1" style="transform: perspective(800px) rotateX(-24.8166deg) rotateY(3490.68deg);"> 
-		<li style="transition: all 0.5s 2.2s; transform: rotateY(0deg) translateZ(450px);"><img src="./3d/1.jpg" ondragstart="return false"></li>
-		<li style="transition: all 0.5s 2s; transform: rotateY(30deg) translateZ(450px);"><img src="./3d/2.jpg" ondragstart="return false"></li>
-		<li style="transition: all 0.5s 1.8s; transform: rotateY(60deg) translateZ(450px);"><img src="./3d/3.jpg" ondragstart="return false"></li>
-		<li style="transition: all 0.5s 1.6s; transform: rotateY(90deg) translateZ(450px);"><img src="./3d/4.jpg" ondragstart="return false"></li>
-		<li style="transition: all 0.5s 1.4s; transform: rotateY(120deg) translateZ(450px);"><img src="./3d/5.jpg" ondragstart="return false"></li>
-		<li style="transition: all 0.5s 1.2s; transform: rotateY(150deg) translateZ(450px);"><img src="./3d/6.jpg" ondragstart="return false"></li>
-		<li style="transition: all 0.5s 1s; transform: rotateY(180deg) translateZ(450px);"><img src="./3d/7.jpg" ondragstart="return false"></li>
-		<li style="transition: all 0.5s 0.8s; transform: rotateY(210deg) translateZ(450px);"><img src="./3d/8.jpg" ondragstart="return false"></li>
-		<li style="transition: all 0.5s 0.6s; transform: rotateY(240deg) translateZ(450px);"><img src="./3d/9.jpg" ondragstart="return false"></li>
-		<li style="transition: all 0.5s 0.4s; transform: rotateY(270deg) translateZ(450px);"><img src="./3d/10.jpg" ondragstart="return false"></li>
-		<li style="transition: all 0.5s 0.6s; transform: rotateY(240deg) translateZ(450px);"><img src="./3d/11.jpg" ondragstart="return false"></li>
-		<li style="transition: all 0.5s 0.4s; transform: rotateY(270deg) translateZ(450px);"><img src="./3d/12.jpg" ondragstart="return false"></li>
-	</ul>
+<div id="box">
+	<div></div>
+	<div></div>
+	<div></div>
+	<div></div>
+	<div></div>
+	<div></div>
+	<div></div>
+	<div></div>
+	<div></div>
+	<div></div>
+	<p></p>
+</div>
+<script>
+setTimeout(init,100);
+function init(){
+	var obox = document.getElementById('box'),
+		aDiv = obox.getElementsByTagName('div');
+		
+		for (var i = 0; i < aDiv.length; i++) {
+			aDiv[i].style.background = "url(3d/"+(i+1)+".jpg) center/cover";
+			aDiv[i].style.transform = "rotateY("+(i*36)+"deg) translate3d(0,0,420px)";
+			aDiv[i].style.transition = "transform 1s "+(aDiv.length-i)*0.2+"s";
+		}
+	var sX,
+		sY,
+		nX,
+		nY,
+		desX = 0,
+		desY = 0,
+		tX = 0,
+		tY = 10,
+		index = 0;//滚轮初始值
+	document.onmousedown = function(e){
+		clearInterval(obox.timer);
+		e = e || window.event;
+		var sX = e.clientX,
+			sY = e.clientY;
+			this.onmousemove = function(e){
+				e = e || window.event;
+				var nX = e.clientX,
+					nY = e.clientY;
+					 // 当前点的坐标和前一点的坐标差值
+					desX = nX - sX;
+					desY = nY - sY;
+                    tX += desX*0.1; 
+                    tY += desY*0.1;
 
-</body></html>
+					obox.style.transform = "rotateX("+(-tY)+"deg) rotateY("+tX+"deg)";
+					sX = nX;
+					sY = nY;
+			}
+			this.onmouseup = function(){
+				this.onmousemove = this.onmouseup = null;
+				obox.timer = setInterval(function(){
+					desX *= 0.95;
+					desY *= 0.95;
+					tX += desX*0.1;
+					tY += desY*0.1;
+					obox.style.transform = "rotateX("+(-tY)+"deg) rotateY("+tX+"deg)";
+					if (Math.abs(desX)<0.5 && Math.abs(desY)<0.5) {
+						clearInterval(obox.timer);
+					}
+				},13);
+			}
+		return false;
+	}
+	//滚轮放大缩小
+	/*mousewheel(document,function(e){
+		e = e || window.event;
+		var d = e.wheelDelta/120 || -e.detail/3;
+			if (d>0) {
+				index-=20;
+			}else{
+				index+=30;
+			}
+			(index<(-1050)&&(index=(-1050)));
+		document.body.style.perspective = 1000 + index + "px";
+	})*/
+	function mousewheel(obj,fn){
+		document.onmousewheel===null?obj.onmousewheel=fn:addEvent(obj,"DOMMouseScroll",fn)
+	}
+	function addEvent(obj,eName,fn){
+		obj.attachEvent?obj.attachEvent("on"+eName,fn):obj.addEventListener(eName,fn);
+	}
+}
+</script>
+</body>
+</html>
